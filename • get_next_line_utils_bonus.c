@@ -1,41 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   • get_next_line_utils_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlima-si <mlima-si@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 12:19:00 by mlima-si          #+#    #+#             */
-/*   Updated: 2025/05/06 15:07:37 by mlima-si         ###   ########.fr       */
+/*   Created: 2025/05/06 16:45:38 by mlima-si          #+#    #+#             */
+/*   Updated: 2025/05/06 17:25:56 by mlima-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
-	i = 0;
 	if (!str)
 		return (0);
+	i = 0;
 	while (str[i])
 		i++;
 	return (i);
 }
 
-ssize_t	ft_strchr(const char *str)
+int	ft_strchr(char *str)
 {
-	ssize_t	i;
+	int	i;
 
 	i = 0;
 	if (!str)
 		return (-1);
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (str[i] == '\n')
-		return (i);
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (i);
+	}
 	return (-1);
+}
+
+void	*ft_memmov(char *stach)
+{
+	size_t	nline;
+	size_t	i;
+
+	nline = ft_strchr(stach) + 1;
+	i = 0;
+	while (stach[nline + i] && nline)
+	{
+		stach[i] = stach[i + nline];
+		i++;
+	}
+	while (i < BUFFER_SIZE)
+		stach[i++] = '\0';
 }
 
 char	*ft_strjoin(char *line, char *stach)
@@ -51,51 +68,30 @@ char	*ft_strjoin(char *line, char *stach)
 			return (NULL);
 		line[0] = '\0';
 	}
-	str = malloc((ft_strlen(line) + ft_strlen(stach) + 1) * sizeof(char));
-	if (str)
+	str = malloc ((ft_strlen(line) + ft_strlen(stach) + 1) * sizeof(char));
+	if(str)
 	{
 		i = -1;
 		j = -1;
 		while (line[++i])
 			str[i] = line[i];
 		while (stach[++j])
-			str[i + j] = stach[j];
-		str[i + j] = '\0';
+			str[i + j] = stach [j];
+		str[i + j] = '\0';		
 	}
 	free(line);
 	return (str);
+		
 }
 
-char	*release(char *line, char *stach)
+char	release(char *line, char *stach)
 {
-	size_t	i;
+	int	i;
 
 	if (line)
 		free(line);
 	i = 0;
 	while (i < BUFFER_SIZE)
-	{
-		stach[i] = '\0';
-		i++;
-	}
+		stach[i++] = '\0';
 	return (NULL);
-}
-
-void	ft_memmove(char *stach)
-{
-	size_t	i;
-	size_t	nline;
-
-	i = 0;
-	nline = ft_strchr(stach) + 1;
-	while (stach[i + nline] && nline)
-	{
-		stach[i] = stach[i + nline];
-		i++;
-	}
-	while (i < BUFFER_SIZE)
-	{
-		stach[i] = '\0';
-		i++;
-	}
 }
