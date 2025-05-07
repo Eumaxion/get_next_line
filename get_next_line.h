@@ -6,7 +6,7 @@
 /*   By: mlima-si <mlima-si@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:20:03 by mlima-si          #+#    #+#             */
-/*   Updated: 2025/05/05 13:44:25 by mlima-si         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:41:27 by mlima-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 char	*get_next_line(int fd);
 ssize_t	ft_strchr(const char *str);
 size_t	ft_strlen(const char *str);
-char	*ft_strjoin(char *line, char *stach);
-void	ft_memmove(char *stach);
-char	*release(char *line, char *stach);
+char	*ft_strjoin(char *line, char *stash);
+void	ft_memmove(char *stash);
+char	*release(char *line, char *stash);
 
 #endif

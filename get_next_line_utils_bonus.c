@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   • get_next_line_utils_bonus.c                      :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlima-si <mlima-si@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 16:45:38 by mlima-si          #+#    #+#             */
-/*   Updated: 2025/05/06 17:25:56 by mlima-si         ###   ########.fr       */
+/*   Created: 2025/05/07 10:38:58 by mlima-si          #+#    #+#             */
+/*   Updated: 2025/05/07 12:10:16 by mlima-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
@@ -24,9 +24,9 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_strchr(char *str)
+ssize_t	ft_strchr(const char *str)
 {
-	int	i;
+	ssize_t	i;
 
 	i = 0;
 	if (!str)
@@ -39,23 +39,26 @@ int	ft_strchr(char *str)
 	return (-1);
 }
 
-void	*ft_memmov(char *stach)
+void	ft_memmov(char *stash)
 {
 	size_t	nline;
 	size_t	i;
 
-	nline = ft_strchr(stach) + 1;
+	nline = ft_strchr(stash) + 1;
 	i = 0;
-	while (stach[nline + i] && nline)
+	while (stash[nline + i] && nline)
 	{
-		stach[i] = stach[i + nline];
+		stash[i] = stash[i + nline];
 		i++;
 	}
 	while (i < BUFFER_SIZE)
-		stach[i++] = '\0';
+	{
+		stash[i] = '\0';
+		i++;
+	}
 }
 
-char	*ft_strjoin(char *line, char *stach)
+char	*ft_strjoin(char *line, char *stash)
 {
 	int		i;
 	int		j;
@@ -68,30 +71,29 @@ char	*ft_strjoin(char *line, char *stach)
 			return (NULL);
 		line[0] = '\0';
 	}
-	str = malloc ((ft_strlen(line) + ft_strlen(stach) + 1) * sizeof(char));
-	if(str)
+	str = malloc((ft_strlen(line) + ft_strlen(stash) + 1) * sizeof(char));
+	if (str)
 	{
 		i = -1;
 		j = -1;
 		while (line[++i])
 			str[i] = line[i];
-		while (stach[++j])
-			str[i + j] = stach [j];
-		str[i + j] = '\0';		
+		while (stash[++j])
+			str[i + j] = stash[j];
+		str[i + j] = '\0';
 	}
 	free(line);
 	return (str);
-		
 }
 
-char	release(char *line, char *stach)
+char	*release(char *line, char *stash)
 {
-	int	i;
+	size_t	i;
 
 	if (line)
 		free(line);
 	i = 0;
 	while (i < BUFFER_SIZE)
-		stach[i++] = '\0';
+		stash[i++] = '\0';
 	return (NULL);
 }
