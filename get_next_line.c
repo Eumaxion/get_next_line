@@ -30,36 +30,32 @@ char	*get_next_line(int fd)
 	line = read_line(fd, stash, line);
 	if (!line)
 		return (NULL);
-	line = set_line(line, stash);
-	return (line);
+	return (set_line(line, stash));
 }
 
 char	*read_line(int fd, char *stash, char *line)
 {
 	ssize_t	count;
 
-	ft_memmove(stash);
 	count = 1;
-	while (1)
+	while (count > 0)
 	{
 		count = read(fd, stash, BUFFER_SIZE);
 		if (count < 0)
 			return (release(line, stash));
-		if (count == 0)
-			break ;
+		stach[count] = '\0';
 		line = ft_strjoin(line, stash);
 		if (!line)
 			return (NULL);
 		if (ft_strchr(stash) >= 0)
 			break ;
-		ft_memmove(stash);
 	}
 	return (line);
 }
 
 char	*set_line(char *line, char *stash)
 {
-	int	nline;
+	ssize_t	nline;
 
 	nline = ft_strchr(line);
 	if (nline >= 0)

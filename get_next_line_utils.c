@@ -51,6 +51,8 @@ char	*ft_strjoin(char *line, char *stash)
 			return (NULL);
 		line[0] = '\0';
 	}
+	if (!stash)
+		return (line);
 	str = malloc((ft_strlen(line) + ft_strlen(stash) + 1) * sizeof(char));
 	if (str)
 	{
@@ -84,18 +86,21 @@ char	*release(char *line, char *stash)
 void	ft_memmove(char *stash)
 {
 	size_t	i;
-	size_t	nline;
+	ssize_t	nline;
 
 	i = 0;
-	nline = ft_strchr(stash) + 1;
-	while (stash[i + nline] && nline)
+	nline = ft_strchr(stash);
+	if (nline < 0)
+	{
+		stash[0] = '\0';
+		return ;
+	}
+	nline++;
+	while (stash[i + nline])
 	{
 		stash[i] = stash[i + nline];
 		i++;
 	}
 	while (i < BUFFER_SIZE)
-	{
-		stash[i] = '\0';
-		i++;
-	}
+		stash[i++] = '\0';
 }
