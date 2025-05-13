@@ -6,7 +6,7 @@
 /*   By: mlima-si <mlima-si@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:38:58 by mlima-si          #+#    #+#             */
-/*   Updated: 2025/05/07 12:10:16 by mlima-si         ###   ########.fr       */
+/*   Updated: 2025/05/10 10:50:04 by mlima-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ ssize_t	ft_strchr(const char *str)
 	i = 0;
 	if (!str)
 		return (-1);
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			return (i);
-	}
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		return (i);
 	return (-1);
 }
 

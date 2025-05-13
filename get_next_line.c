@@ -6,13 +6,13 @@
 /*   By: mlima-si <mlima-si@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:18:36 by mlima-si          #+#    #+#             */
-/*   Updated: 2025/05/07 13:02:51 by mlima-si         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:24:33 by mlima-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_line(int fd, char *stash, char *line);
+char	*read_line(char *line, char *stash, int fd);
 char	*set_line(char *line, char *stash);
 
 char	*get_next_line(int fd)
@@ -27,35 +27,39 @@ char	*get_next_line(int fd)
 		line = ft_strjoin(line, stash);
 	if (ft_strchr(stash) >= 0)
 		return (set_line(line, stash));
-	line = read_line(fd, stash, line);
+	line = read_line(line, stash, fd);
 	if (!line)
 		return (NULL);
-	return (set_line(line, stash));
+	line = set_line(line, stash);
+	return (line);
 }
 
-char	*read_line(int fd, char *stash, char *line)
+char	*read_line(char *line, char *stash, int fd)
 {
 	ssize_t	count;
 
+	ft_memmove(stash);
 	count = 1;
-	while (count > 0)
+	while (1)
 	{
 		count = read(fd, stash, BUFFER_SIZE);
 		if (count < 0)
 			return (release(line, stash));
-		stach[count] = '\0';
+		if (count == 0)
+			break ;
 		line = ft_strjoin(line, stash);
 		if (!line)
 			return (NULL);
 		if (ft_strchr(stash) >= 0)
 			break ;
+		ft_memmove(stash);
 	}
 	return (line);
 }
 
 char	*set_line(char *line, char *stash)
 {
-	ssize_t	nline;
+	int	nline;
 
 	nline = ft_strchr(line);
 	if (nline >= 0)
