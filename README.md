@@ -11,7 +11,7 @@ Through this project, I learned how to manage buffered input, handle multiple fi
 Clone the repository:  
 
 ```  
-git clone https://github.com/yourusername/get_next_line.git
+git clone https://github.com/Eumaxion/get_next_line.git
 cd get_next_line
 
 ```
